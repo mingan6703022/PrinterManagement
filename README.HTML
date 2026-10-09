@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>印表機設定搬家工具｜圖文使用說明</title>
+  <style>
+    :root {
+      --ink: #17263d;
+      --muted: #5c6d83;
+      --navy: #17365d;
+      --blue: #2864a5;
+      --blue-soft: #eaf2fb;
+      --green: #1d7656;
+      --green-soft: #e9f6f0;
+      --gold: #8b5b08;
+      --gold-soft: #fff5df;
+      --red: #963c38;
+      --red-soft: #fff0ee;
+      --line: #dce4ed;
+      --paper: #ffffff;
+      --canvas: #f3f6fa;
+      --shadow: 0 12px 35px rgba(23, 54, 93, .08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: "Microsoft JhengHei UI", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      line-height: 1.75;
+    }
+    a { color: #1d5e9d; }
+    .hero {
+      padding: 46px 24px 34px;
+      color: #fff;
+      background: linear-gradient(125deg, #142d4b, #24558a 70%, #3576ad);
+    }
+    .hero-inner, main, footer { width: min(1060px, calc(100% - 36px)); margin: auto; }
+    .eyebrow { margin: 0 0 8px; color: #bed6ee; font-size: .9rem; letter-spacing: .08em; }
+    h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.2; }
+    .hero p { max-width: 760px; margin: 16px 0 0; color: #e5effa; font-size: 1.08rem; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .badge { padding: 5px 11px; border: 1px solid #ffffff55; border-radius: 999px; color: #f5f9ff; font-size: .88rem; }
+    .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; align-items: start; padding: 28px 0 48px; }
+    nav {
+      position: sticky; top: 18px; padding: 18px; border: 1px solid var(--line);
+      border-radius: 14px; background: var(--paper); box-shadow: var(--shadow);
+    }
+    nav strong { display: block; margin: 0 0 9px; color: var(--navy); }
+    nav a { display: block; padding: 5px 0; color: var(--muted); text-decoration: none; font-size: .94rem; }
+    nav a:hover { color: var(--blue); }
+    article { min-width: 0; }
+    section, .card {
+      margin: 0 0 18px; padding: 25px 27px; border: 1px solid var(--line);
+      border-radius: 16px; background: var(--paper); box-shadow: var(--shadow);
+    }
+    h2 { margin: 0 0 14px; color: var(--navy); font-size: 1.55rem; line-height: 1.35; }
+    h3 { margin: 20px 0 7px; color: var(--navy); font-size: 1.12rem; }
+    p { margin: 8px 0 12px; }
+    ul, ol { padding-left: 1.35rem; }
+    li { margin: 5px 0; }
+    .lead { color: var(--muted); font-size: 1.04rem; }
+    .notice { margin: 15px 0; padding: 13px 16px; border-left: 4px solid var(--blue); border-radius: 8px; background: var(--blue-soft); }
+    .notice.good { border-color: var(--green); background: var(--green-soft); }
+    .notice.warn { border-color: #d59b31; background: var(--gold-soft); }
+    .notice.error { border-color: #c05a53; background: var(--red-soft); }
+    .notice strong { color: var(--navy); }
+    .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 15px; }
+    .step { padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcfe; }
+    .step-num { display: inline-grid; width: 29px; height: 29px; margin-right: 7px; place-items: center; border-radius: 50%; background: var(--blue); color: #fff; font-weight: 700; }
+    .flow { width: 100%; height: auto; margin: 8px 0 0; border: 1px solid var(--line); border-radius: 12px; background: #fbfdff; }
+    .app-demo { max-width: 620px; margin: 18px auto 8px; overflow: hidden; border: 1px solid #b9c9da; border-radius: 11px; background: #f6f8fb; box-shadow: 0 12px 24px #17365d1a; }
+    .app-title { padding: 10px 15px; background: #18375e; color: #fff; font-weight: 700; }
+    .app-status { margin: 14px; padding: 11px 13px; border: 1px solid #c8d9eb; border-radius: 8px; background: #fff; color: #284967; font-size: .93rem; }
+    .app-actions { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 14px 14px; }
+    .fake-button { padding: 9px 18px; border-radius: 7px; color: #fff; background: #2864a5; font-weight: 700; }
+    .fake-button.green { background: #2e7d50; }
+    .caption { display: block; margin: -2px 0 12px; color: var(--muted); text-align: center; font-size: .86rem; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+    th, td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #f0f5fa; color: var(--navy); }
+    code { padding: 2px 5px; border-radius: 4px; background: #eef2f6; color: #283b53; font-family: Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+    .checklist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; padding: 0; list-style: none; }
+    .checklist li::before { content: "✓"; display: inline-grid; width: 22px; height: 22px; margin-right: 8px; place-items: center; border-radius: 50%; background: var(--green-soft); color: var(--green); font-weight: 800; }
+    details { margin: 9px 0; padding: 12px 15px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfe; }
+    summary { color: var(--navy); cursor: pointer; font-weight: 700; }
+    details p { margin-bottom: 0; }
+    footer { padding: 4px 0 34px; color: var(--muted); font-size: .9rem; }
+    .small { color: var(--muted); font-size: .9rem; }
+    @media (max-width: 780px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { position: static; }
+      nav div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; }
+      .steps, .checklist { grid-template-columns: 1fr; }
+      section, .card { padding: 21px 19px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .hero { padding: 20px; print-color-adjust: exact; }
+      .layout { display: block; padding: 16px 0; }
+      nav { display: none; }
+      section, .card { box-shadow: none; break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">免安裝版・繁體中文操作指南</p>
+      <h1>印表機設定搬家工具</h1>
+      <p>用一份備份把 Windows 印表機佇列、驅動程式、連接埠、共用資訊與自訂紙張表單搬到另一台電腦。這份說明從首次啟動一路帶你完成匯出、移轉與匯入。</p>
+      <div class="badges">
+        <span class="badge">Windows 10 / 11</span>
+        <span class="badge">Windows Server 2022 / 2025</span>
+        <span class="badge">需要 UAC 管理員權限</span>
+        <span class="badge">備份格式 .printerExport</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <nav aria-label="頁面目錄">
+      <strong>快速導覽</strong>
+      <div>
+        <a href="#before">開始前</a>
+        <a href="#startup">啟動與自動安裝</a>
+        <a href="#export">舊電腦匯出</a>
+        <a href="#transfer">移動備份檔</a>
+        <a href="#import">新電腦匯入</a>
+        <a href="#verify">匯入後檢查</a>
+        <a href="#trouble">常見問題</a>
+        <a href="#scope">備份範圍</a>
+      </div>
+    </nav>
+
+    <article>
+      <section id="before">
+        <h2>一、開始前先確認</h2>
+        <p class="lead">先在舊電腦匯出備份，再把檔案帶到新電腦匯入。不要在新電腦先刪除印表機；匯入時同名佇列可能會更新。</p>
+        <div class="steps">
+          <div class="step"><span class="step-num">1</span><strong>完整解壓縮</strong><br>把 ZIP 解壓到資料夾，不要只從壓縮檔內直接執行單一檔案。</div>
+          <div class="step"><span class="step-num">2</span><strong>保留同一資料夾</strong><br><code>PrinterBackup.exe</code>、<code>PrinterBackup.ps1</code> 和啟動檔需放在一起。</div>
+          <div class="step"><span class="step-num">3</span><strong>準備管理員帳號</strong><br>匯出、匯入及安裝 Windows 列印管理元件都需要管理員權限。</div>
+          <div class="step"><span class="step-num">4</span><strong>保持網路連線</strong><br>若電腦缺少 PrintBRM，Windows 可能會從 Windows Update 或企業功能來源下載元件。</div>
+        </div>
+        <div class="notice warn"><strong>Server 版本：</strong>Windows Server 2022 / 2025 請使用 Desktop Experience（桌面體驗）。Server Core 沒有此視窗程式所需的桌面環境。</div>
+      </section>
+
+      <section id="startup">
+        <h2>二、啟動程式與自動安裝</h2>
+        <ol>
+          <li>在解壓後的資料夾雙擊 <code>PrinterBackup.exe</code>，或雙擊「一鍵啟動.cmd」。</li>
+          <li>Windows 會在啟動時顯示 UAC 視窗。按「是」或輸入管理員帳號密碼，程式才會以系統管理員身分執行。</li>
+          <li>程式會檢查 PrintBRM 與 Print Spooler 狀態。若找不到 PrintBRM，會自動安裝 Windows 官方列印管理元件，完成後再開放匯出／匯入。</li>
+        </ol>
+        <div class="app-demo" role="img" aria-label="程式狀態與匯出匯入按鈕示意圖">
+          <div class="app-title">印表機設定搬家工具</div>
+          <div class="app-status">PrintBRM：已找到 Windows 內建工具　　Print Spooler：Running</div>
+          <div class="app-actions"><span class="fake-button">匯出備份</span><span class="fake-button green">匯入還原</span></div>
+        </div>
+        <span class="caption">程式介面示意。若元件缺少，狀態會先顯示正在下載／安裝。</span>
+        <table>
+          <thead><tr><th>系統</th><th>缺少 PrintBRM 時的安裝方式</th><th>下載來源</th></tr></thead>
+          <tbody>
+            <tr><td>Windows 10 2004+ / 11</td><td>DISM 安裝 Print Management Console 選用功能</td><td>Windows 元件來源，通常是 Windows Update</td></tr>
+            <tr><td>Windows Server 2022 / 2025</td><td>安裝 RSAT-Print-Services 列印管理工具</td><td>Windows Server 功能來源</td></tr>
+          </tbody>
+        </table>
+        <p class="small">Windows 10 的 Print Management Console 選用功能自 2004 版起提供。若較舊 Windows 10 沒有此功能，請先更新 Windows，或依畫面錯誤使用適用於該版本的 Windows 元件來源。</p>
+        <div class="notice good"><strong>管理員啟動：</strong>EXE 已內嵌 Windows 的 <code>requireAdministrator</code> 設定。雙擊時先出現 UAC，允許後才啟動；若按「否」或取消，Windows 會阻止程式啟動。</div>
+      </section>
+
+      <section id="export">
+        <h2>三、在舊電腦匯出</h2>
+        <ol>
+          <li>啟動工具並確認「PrintBRM：已找到」及「Print Spooler：Running」。</li>
+          <li>按「匯出備份」。</li>
+          <li>在存檔視窗選擇備份位置與檔名。預設檔名包含電腦名稱和時間，副檔名為 <code>.printerExport</code>。</li>
+          <li>按「儲存」，等待進度完成。印表機多、驅動程式大或網路磁碟速度較慢時，可能需要幾分鐘。</li>
+          <li>看到「作業完成」並在紀錄中出現「完成：檔案路徑」，代表匯出程序已結束。</li>
+        </ol>
+        <div class="notice"><strong>建議：</strong>把備份存到本機資料夾，再複製到同步磁碟或 USB。匯出中不要關閉程式、關機或中斷磁碟。</div>
+      </section>
+
+      <section id="transfer">
+        <h2>四、把備份帶到新電腦</h2>
+        <svg class="flow" viewBox="0 0 900 230" role="img" aria-labelledby="flowTitle flowDesc" xmlns="http://www.w3.org/2000/svg">
+          <title id="flowTitle">印表機設定移轉流程</title>
+          <desc id="flowDesc">舊電腦匯出 printerExport 檔，經 USB 或網路複製後，由新電腦匯入。</desc>
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4779a9"/></marker>
+          </defs>
+          <rect x="35" y="50" width="210" height="130" rx="15" fill="#eaf2fb" stroke="#7da5ce" stroke-width="2"/>
+          <text x="140" y="88" text-anchor="middle" fill="#17365d" font-size="22" font-weight="700">舊電腦</text>
+          <text x="140" y="124" text-anchor="middle" fill="#40556e" font-size="17">按「匯出備份」</text>
+          <text x="140" y="151" text-anchor="middle" fill="#40556e" font-size="16">產生 .printerExport</text>
+          <path d="M255 115 H380" stroke="#4779a9" stroke-width="4" marker-end="url(#arrow)"/>
+          <rect x="390" y="67" width="140" height="96" rx="12" fill="#fff5df" stroke="#d5ad5d" stroke-width="2"/>
+          <text x="460" y="105" text-anchor="middle" fill="#80550d" font-size="18" font-weight="700">備份檔</text>
+          <text x="460" y="135" text-anchor="middle" fill="#6f5a36" font-size="14">USB / 網路 / 同步磁碟</text>
+          <path d="M540 115 H660" stroke="#4779a9" stroke-width="4" marker-end="url(#arrow)"/>
+          <rect x="670" y="50" width="195" height="130" rx="15" fill="#e9f6f0" stroke="#79b99c" stroke-width="2"/>
+          <text x="767" y="88" text-anchor="middle" fill="#1d6449" font-size="22" font-weight="700">新電腦</text>
+          <text x="767" y="124" text-anchor="middle" fill="#40556e" font-size="17">按「匯入還原」</text>
+          <text x="767" y="151" text-anchor="middle" fill="#40556e" font-size="16">選取備份檔</text>
+          <text x="450" y="211" text-anchor="middle" fill="#65778d" font-size="14">請完整複製檔案；不要改副檔名。</text>
+        </svg>
+        <p>把整個 <code>.printerExport</code> 檔複製到新電腦可讀寫的位置。若透過網路或同步資料夾，先確認檔案已完整同步完成，再進行匯入。</p>
+      </section>
+
+      <section id="import">
+        <h2>五、在新電腦匯入還原</h2>
+        <ol>
+          <li>把免安裝工具資料夾解壓到新電腦，雙擊 EXE 或一鍵啟動檔，並允許 UAC。</li>
+          <li>若 PrintBRM 不存在，先等待 Windows 自動下載／安裝完成。下載來源受網路或組織原則限制時，程式會顯示錯誤。</li>
+          <li>按「匯入還原」，選擇從舊電腦複製來的 <code>.printerExport</code> 檔。</li>
+          <li>閱讀確認視窗。匯入會加入備份項目；目的電腦已有同名佇列時，設定可能會被更新。確認後按「是」。</li>
+          <li>等待匯入結束，閱讀紀錄並確認完成訊息。過程中不要關閉程式或停止 Print Spooler。</li>
+        </ol>
+        <div class="notice warn"><strong>注意：</strong>匯入的是備份裡的多個佇列和驅動程式，不是單一印表機。若新電腦已有相同名稱的印表機，可能會更新其設定。</div>
+      </section>
+
+      <section id="verify">
+        <h2>六、匯入後逐項檢查</h2>
+        <p>PrintBRM 結束碼成功不代表每個廠牌專屬選項都一定完全相同。建議到 Windows「設定 → 藍牙與裝置 → 印表機與掃描器」或「列印管理」逐項檢查：</p>
+        <ul class="checklist">
+          <li>印表機名稱與佇列是否都出現</li>
+          <li>驅動程式名稱、版本和架構是否合適</li>
+          <li>連接埠、IP 位址或 USB 連線是否正確</li>
+          <li>共用名稱、共用狀態和權限是否符合需要</li>
+          <li>紙張尺寸、自訂表單、紙匣與雙面設定</li>
+          <li>預設印表機與預設紙張方向</li>
+          <li>每台實體印表機是否在線上</li>
+          <li>列印一張測試頁確認輸出</li>
+        </ul>
+        <p>若某一台印表機未恢復或設定不同，開啟事件檢視器查看 PrintBRM 管理記錄：<code>Applications and Services Logs / Microsoft / PrintBRM / Admin</code>。也可在程式紀錄中查看 PrintBRM 輸出。</p>
+      </section>
+
+      <section id="trouble">
+        <h2>七、常見問題與處理方式</h2>
+        <details>
+          <summary>雙擊後沒有畫面，或 UAC 被取消</summary>
+          <p>請重新雙擊 <code>PrinterBackup.exe</code> 或「一鍵啟動.cmd」，在 UAC 視窗按「是」。若是標準使用者帳號，需輸入管理員帳號密碼。沒有管理員核准時，Windows 不會允許安裝或匯入驅動程式。</p>
+        </details>
+        <details>
+          <summary>自動安裝 Print Management 失敗</summary>
+          <p>請確認電腦能連到 Windows Update 或企業設定的 Features on Demand 來源。公司網域的 WSUS／群組原則可能封鎖選用功能下載。重新啟動工具會再嘗試一次；若仍失敗，請把程式顯示的完整錯誤交給系統管理員。</p>
+        </details>
+        <details>
+          <summary>提示 Print Spooler 未執行</summary>
+          <p>在 Windows「服務」中啟動「Print Spooler／列印多工緩衝處理器」，再重新執行匯出或匯入。不要在 PrintBRM 工作進行中停止此服務。</p>
+        </details>
+        <details>
+          <summary>匯出或匯入顯示錯誤碼／部分印表機跳過</summary>
+          <p>先保留錯誤文字和 `.printerExport` 備份，再查看事件檢視器的 PrintBRM/Admin 記錄。確認磁碟可寫入、備份檔完整、目的電腦有足夠空間，以及驅動程式支援目的 Windows 架構。不要反覆匯入不明或損壞的備份。</p>
+        </details>
+        <details>
+          <summary>新電腦的印表機已出現，但無法列印</summary>
+          <p>檢查印表機 IP／連接埠、網路連線、USB 線、驅動程式與印表機本身狀態。跨不同 Windows 版本或處理器架構時，可能需要先安裝新電腦適用的廠牌驅動程式，並在印表機內容中重新指定機型選項。</p>
+        </details>
+        <details>
+          <summary>匯出成功，但紀錄中的中文亂碼</summary>
+          <p>請使用最新版工具。新版會依輸出內容判斷 UTF-8 或 Windows OEM 編碼；若仍出現亂碼，請保留 `.printerExport` 檔，因紀錄文字亂碼不一定代表備份內容損壞，並回報完整紀錄。</p>
+        </details>
+      </section>
+
+      <section id="scope">
+        <h2>八、備份內容與限制</h2>
+        <p>本工具呼叫 Windows PrintBRM，將目前電腦可搬移的印表機伺服器設定打包成 `.printerExport`。涵蓋支援的佇列、驅動程式、連接埠、共用資訊、伺服器列印設定與自訂紙張表單。</p>
+        <div class="notice error"><strong>不包含：</strong>廠商掃描／傳真工具、帳號憑證、印表機面板或雲端服務設定、應用程式內的個人列印偏好。USB 設備在新電腦可能需重新接線或指定連接埠。</div>
+        <p>來源與目的電腦建議使用相同處理器架構。Windows Server 請使用桌面體驗。程式會從 Windows 元件來源安裝管理工具，不會從第三方網站下載 Windows 系統檔。</p>
+        <h3>Microsoft 參考資料</h3>
+        <ul>
+          <li><a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/printing/back-up-restore-printers">備份和還原印表機</a></li>
+          <li><a href="https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/features-on-demand-non-language-fod?view=windows-11">Features on Demand：Print Management Console</a></li>
+          <li><a href="https://learn.microsoft.com/windows-server/remote/remote-server-administration-tools">安裝及管理 Windows Server RSAT</a></li>
+        </ul>
+      </section>
+    </article>
+  </main>
+  <footer>印表機設定搬家工具｜圖文使用說明。離線可讀；圖示與樣式均內嵌於本 HTML 檔。</footer>
+</body>
+</html>
